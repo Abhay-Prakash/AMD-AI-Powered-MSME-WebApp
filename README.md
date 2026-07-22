@@ -1,164 +1,339 @@
-# SubsidyDesk Backend
+# 🚀 Suvan – AI-Powered MSME & CA Opportunity Platform
 
-Basic FastAPI backend for SubsidyDesk.
+> An AI-powered platform that empowers **Micro, Small & Medium Enterprises (MSMEs)** and **Chartered Accountants (CAs)** by simplifying access to government schemes, subsidies, grants, tenders, compliance guidance, and business opportunities through intelligent AI assistance.
 
-## Current Step
+---
 
-Step 1 sets up the smallest useful API foundation:
+# 📖 Overview
 
-- FastAPI application entrypoint
-- Health check endpoint
-- Central settings object
-- Versioned API router
+Suvan is a unified AI-powered platform built to bridge the gap between government opportunities, MSMEs, and Chartered Accountants.
 
-Step 2 adds the database foundation:
+Business owners often struggle to discover relevant schemes, grants, subsidies, tenders, and financial support because information is spread across multiple government portals. Similarly, Chartered Accountants spend significant time researching regulations, identifying client opportunities, and simplifying compliance requirements.
 
-- Async SQLAlchemy engine
-- Async database session dependency
-- Shared SQLAlchemy base model
-- Timestamp mixin
-- Alembic migration setup
+Suvan centralizes these services into a single platform where users can discover opportunities, understand eligibility, receive AI-assisted guidance, and access business insights through an intuitive and responsive interface.
 
-## Run Locally
+The platform combines a modern React frontend with a scalable FastAPI backend and an AI orchestration layer to provide intelligent, context-aware assistance while ensuring deterministic business logic for eligibility-related decisions.
+
+---
+
+# 🎯 Key Features
+
+## 👨‍💼 For MSMEs
+
+- 🔍 Government Scheme Discovery
+- 💰 Subsidy & Grant Recommendations
+- 🏦 Loan & Funding Opportunities
+- 📋 Tender Discovery
+- 🤖 AI Business Assistant
+- 📈 Personalized Dashboard
+- 📑 Eligibility Guidance
+
+---
+
+## 👨‍💼 For Chartered Accountants
+
+- 📁 Client Portfolio Management
+- 📊 Opportunity Discovery for Clients
+- 🧾 Compliance Assistance
+- 🤖 AI Tax & Business Guidance
+- 📑 Scheme Matching
+- 📈 Advisory Support
+
+---
+
+## 🤖 AI Capabilities
+
+- AI Chat Assistant
+- Intelligent Opportunity Search
+- AI-powered Explanations
+- Context-aware Responses
+- Summarization & Drafting
+- Document Understanding (Architecture Ready)
+- Model Routing & AI Orchestration
+
+> **Note:** AI assists with explanations, drafting, and summarization. All eligibility-related decisions remain deterministic and rule-based.
+
+---
+
+# 🛠️ Technology Stack
+
+## Frontend
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- React Router
+- Framer Motion
+- Firebase Authentication
+- Google OAuth
+
+---
+
+## Backend
+
+- FastAPI
+- Python
+- SQLAlchemy (Async)
+- PostgreSQL
+- Alembic
+- Docker
+- Docker Compose
+
+---
+
+## AI
+
+- Fireworks AI
+- Gemma Models
+- Qwen Models
+- AI Orchestrator
+- Prompt Manager
+- Context Builder
+- Model Registry
+
+---
+
+## Deployment
+
+- Vercel
+- Docker
+- PostgreSQL
+
+---
+
+# 🚀 Getting Started
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/divyammanas/AMD-AI-Powered-MSME-WebApp.git
+
+cd AMD-AI-Powered-MSME-WebApp
+```
+
+---
+
+# 💻 Frontend Setup
+
+Navigate to the frontend directory:
+
+```bash
+cd frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Frontend runs on:
+
+```
+http://localhost:5173
+```
+
+---
+
+# ⚙️ Backend Setup
+
+Navigate to the backend directory:
+
+```bash
+cd backend
+```
+
+Create a virtual environment.
+
+### Windows
+
+```bash
+python -m venv .venv
+
+.venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
+python3 -m venv .venv
+
+source .venv/bin/activate
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+Run the backend:
+
+```bash
 uvicorn app.main:app --reload
 ```
 
-Then open:
+Backend runs on:
 
-```text
+```
+http://127.0.0.1:8000
+```
+
+Health Check:
+
+```
 http://127.0.0.1:8000/api/v1/health
 ```
 
-## Database
+---
 
-The backend is configured for async SQLAlchemy with PostgreSQL.
+# 🗄️ Database Configuration
 
-Set this value in `.env`:
+Create a `.env` file inside the backend directory.
 
-```text
-DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/subsidydesk
+Example:
+
+```env
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/suvan
+
+FIREWORKS_API_KEY=your_fireworks_api_key
+
+FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1
+
+FIREWORKS_MODEL=accounts/fireworks/models/gemma-4-31b-it
 ```
 
-Alembic is included for migrations:
+Run migrations:
 
 ```bash
-alembic revision --autogenerate -m "initial schema"
 alembic upgrade head
 ```
 
-## Backend Rule
+---
 
-Eligibility logic must stay deterministic. AI can explain and draft, but it must not decide eligibility.
+# 🐳 Docker Setup
 
-## Clients API
-
-Basic client portfolio endpoints are available under:
-
-```text
-/api/v1/clients
-```
-
-Supported operations:
-
-- `POST /api/v1/clients`
-- `GET /api/v1/clients`
-- `GET /api/v1/clients/{client_id}`
-- `PATCH /api/v1/clients/{client_id}`
-- `DELETE /api/v1/clients/{client_id}`
-
-## Local PostgreSQL With Docker
-
-If Docker Desktop is installed, start PostgreSQL with:
+Start PostgreSQL and backend services:
 
 ```bash
 docker compose up -d
 ```
 
-Then run migrations:
+Run migrations:
 
 ```bash
-.venv\Scripts\python.exe -m alembic upgrade head
+alembic upgrade head
 ```
 
-## Fireworks AI
+If Docker is unavailable, you can use a hosted PostgreSQL database (Neon, Railway, Supabase, etc.) by updating the `DATABASE_URL` in your `.env` file.
 
-Fireworks is used only for explanation, drafting, summarization, and chat. It must not decide eligibility.
+---
 
-Add these values to `.env`:
+# 🤖 AI Architecture
 
-```text
-FIREWORKS_API_KEY=your-fireworks-key
-FIREWORKS_BASE_URL=https://api.fireworks.ai/inference/v1
-FIREWORKS_MODEL=accounts/fireworks/models/deepseek-v3p1
+The backend uses an AI orchestration layer that separates business logic from AI providers, allowing the platform to scale and support multiple models.
+
+Current capabilities include:
+
+| Capability | Model |
+|------------|-------|
+| AI Chat | Gemma 4 |
+| Reasoning | Gemma 4 |
+| Opportunity Explanation | Gemma 4 |
+| Document Understanding | Qwen |
+| Embeddings | Qwen Embedding |
+| Reranking | Qwen Reranker |
+
+The architecture is designed so that future AI providers and models can be integrated without modifying the core business services.
+
+---
+
+# 🔐 Authentication
+
+- Firebase Authentication
+- Google OAuth
+- Secure User Sessions
+
+---
+
+# 📡 API
+
+Base URL
+
+```
+/api/v1
 ```
 
-The wrapper is in `app/agents/fireworks_provider.py`. Future services should call agents/providers, not the LLM directly from routers.
+### Health Endpoint
 
-## If Docker Is Not Available
-
-Use a hosted PostgreSQL database instead of local Docker. Good options are Neon, Supabase, or Railway PostgreSQL.
-
-After creating a hosted database, copy its async SQLAlchemy URL into `.env`:
-
-```text
-DATABASE_URL=postgresql+asyncpg://USER:PASSWORD@HOST:5432/DATABASE?ssl=require
+```
+GET /health
 ```
 
-Then run:
+### Client Management
 
-```bash
-.venv\Scripts\python.exe -m alembic upgrade head
-.venv\Scripts\python.exe -m uvicorn app.main:app --reload
+```
+POST   /clients
+GET    /clients
+GET    /clients/{id}
+PATCH  /clients/{id}
+DELETE /clients/{id}
 ```
 
-For the hackathon, hosted PostgreSQL is acceptable because the final project is still containerized in code with `docker-compose.yml`, while your laptop does not need to run Docker locally.
+The backend is structured to support additional APIs for AI chat, opportunity discovery, user management, recommendations, and future business services.
 
-## Task-Based Fireworks Models
+---
 
-The backend is prepared for this model routing plan:
+# 🌍 Future Scope
 
-| Task | Environment variable | Intended model |
-| --- | --- | --- |
-| AI Chat | `FIREWORKS_CHAT_MODEL` | Kimi K2.6 |
-| Eligibility Explanation | `FIREWORKS_EXPLANATION_MODEL` | DeepSeek V4 Pro |
-| Application Drafting | `FIREWORKS_DRAFTING_MODEL` | DeepSeek V4 Pro |
-| OCR / Document Understanding | `FIREWORKS_OCR_MODEL` | Qwen 3.6 Plus or Qwen VL model |
-| Embeddings | `FIREWORKS_EMBEDDING_MODEL` | Qwen3 Embedding 8B |
-| Reranking | `FIREWORKS_RERANKER_MODEL` | Qwen3 Reranker 8B |
+- AI Opportunity Agent
+- OCR-based Document Processing
+- Automated Scheme Recommendation Engine
+- Multilingual Support
+- Personalized Notifications
+- Application Tracking
+- Advanced Business Analytics
+- Dedicated CA Workspace
+- Enhanced MSME Dashboard
 
-Use the exact model IDs from your Fireworks dashboard/API access, not just the display names from the recommendation table.
+---
 
-## AI Orchestration Architecture
+# 👥 Contributors
 
-Business services should call the AI Orchestrator, not Fireworks directly.
+### Divyam Manas
 
-```text
-Business Services
--> AI Orchestrator
--> Prompt Manager
--> Context Builder
--> Model Registry / Capability Router
--> AI Gateway
--> Fireworks API
-```
+- Frontend Development
+- UI/UX Design
+- Responsive Design
+- Deployment
 
-Current model capabilities are configured centrally in `app/ai/model_registry.py`:
+### Abhay Prakash
+- Backend Development
+- Agentic Development
+- product Designer
 
-| Capability | Default model |
-| --- | --- |
-| Reasoning / Chat / Planning / Drafting | `accounts/fireworks/models/gemma-4-31b-it` |
-| Document Understanding | `accounts/fireworks/models/qwen3p7-plus` |
-| Embedding | `accounts/fireworks/models/qwen3-embedding-8b` |
-| Reranking | `accounts/fireworks/models/qwen3-reranker-8b` |
+### Atharv Mishra
+- Product Manager
+- strategy
+- Product Designer
 
-Kimi support remains disabled for the MVP. It can be enabled later with:
+### Suvan
 
-```text
-KIMI_ENABLED=true
-KIMI_CHAT_MODEL=exact-kimi-model-id
-```
+- Backend Development
+- FastAPI APIs
+- PostgreSQL Integration
+- SQLAlchemy
+- Docker Configuration
+- AI Orchestration
+- Fireworks AI Integration
 
-Eligibility remains deterministic. AI explains deterministic rule outputs only.
+---
+
